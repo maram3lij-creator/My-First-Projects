@@ -1,0 +1,200 @@
+/* style.css — محدث: ترتيب لوحة الترتيب، مربع الرقم، سبلاش بشرارات */
+:root {
+    --bg: #13717c;
+    --accent: #1f78d1;
+    --accent-dark: #1565a3;
+    --text: #ffffff;
+    --muted: #d6e6fb;
+}
+
+/* أساسيات */
+* { box-sizing: border-box; }
+html,body { height:100%; }
+body {
+    margin:0;
+    font-family:'Times New Roman', Arial, Tahoma, sans-serif;
+    background: linear-gradient(to bottom,#00000043 0%, #13717c 50%, #13717c 100%);
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 16px;
+    position:relative;
+    overflow:auto;
+}
+
+/* الباترن الخلفي */
+body::before{
+    content:'';
+    position:fixed;
+    bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%; height:100%;
+    background-image:url('images/pattern.jpeg');
+    background-size:cover; background-repeat:no-repeat;
+    background-position:center bottom;
+    opacity:0.35; z-index:0;
+    animation:softMove 20s ease-in-out infinite alternate;
+    pointer-events:none;
+}
+@keyframes softMove{
+    0%{background-position:center bottom;}
+    50%{background-position:center 85%;}
+    100%{background-position:center bottom;}
+}
+
+/* الشعارات */
+.logos{ position:absolute; top:18px; left:18px; right:18px; height:120px; display:flex; justify-content:space-between; align-items:center; z-index:3; pointer-events:none; }
+.logos img{ height:130px; width:130px; object-fit:contain; background:rgba(255,255,255,0.03); border-radius:10px; padding:6px; }
+
+/* الحاوية والبطاقات */
+.container{ width:100%; max-width:920px; position:relative; z-index:2; }
+.card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px; padding:28px; text-align:center;
+    box-shadow:0 8px 30px rgba(2,6,23,0.6); display:none; margin:0 auto;
+}
+.card.active{ display:block; }
+
+/* شاشة السبلاش — وسط الصفحة مع شرارات */
+#splash{
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:linear-gradient(180deg, rgba(20,90,96,0.92), rgba(19,113,124,0.85));
+    color:var(--text); padding:28px 36px; border-radius:12px; z-index:9998;
+    display:none; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.45);
+}
+.splash-content h2{ margin:0 0 6px; font-size:1.4rem; }
+.splash-content p{ margin:0 0 8px; color:var(--muted); }
+
+/* Sparkles (شرارات) */
+.splash-sparkle{
+    position:absolute; width:8px; height:8px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.7) 30%, transparent 50%);
+    pointer-events:none; opacity:0; transform:translate(-50%,-50%) scale(0.6);
+    animation: sparkleAnim 1200ms linear infinite;
+    z-index:9999;
+    mix-blend-mode:screen;
+}
+@keyframes sparkleAnim {
+    0% { opacity:0; transform:translate(-50%,-50%) scale(0.4); }
+    10% { opacity:1; transform:translate(-50%,-60%) scale(1.1); }
+    60% { opacity:0.9; transform:translate(-50%,-120%) scale(1.0); }
+    100% { opacity:0; transform:translate(-50%,-160%) scale(0.6); }
+}
+
+/* أزرار */
+.buttons,.controls{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+button{ border:0; cursor:pointer; padding:12px 18px; border-radius:10px; font-size:1rem; transition:transform .14s ease, box-shadow .14s ease; }
+button:active{ transform:translateY(1px); }
+.primary{ background:var(--bg); color:#fff; box-shadow:0 6px 16px rgba(15,88,151,0.25); }
+.secondary,.tertiary{ background:transparent; border:3px solid rgba(255,255,255,0.08); color:var(--text); }
+
+/* الإدخالات */
+.input-row{ display:flex; gap:8px; justify-content:center; margin:12px 0; }
+.input-row input{ padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); width:320px; max-width:70%; background:rgba(255,255,255,0.02); color:var(--text); font-size:1rem; }
+.input-row button{ padding:10px 12px; }
+
+/* مؤشر القوة */
+.meter{ height:12px; width:80%; max-width:520px; margin:14px auto; background:rgba(255,255,255,0.04); border-radius:8px; overflow:hidden; }
+.meter-bar{ height:100%; width:0%; background:linear-gradient(90deg,#ff4d4d,#ffd24d,#4cff8a); transition:width .35s ease; }
+
+/* لوحة الترتيب — تخطيط مُحسّن */
+.leader-container{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+
+/* كل عنصر */
+.leader-item{
+    display:grid;
+    grid-template-columns: auto 1fr 1fr; /* rank | right info (name+strength) | left stacked details */
+    gap:12px;
+    align-items:center;
+    padding:10px 12px;
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    position:relative;
+}
+
+/* مربع الرقم — على اليمين بصغر وحجم يناسب الرقم */
+.rank-box{
+    grid-column:1/2; /* right-most in rtl layout visual order will be reversed by direction, we'll place it visually right using margin */
+    justify-self:end;
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border:1px solid rgba(255,255,255,0.04);
+    color:var(--text);
+    font-weight:700;
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    backdrop-filter: blur(6px);
+}
+
+/* معلومات جهة اليمين (الاسم والنسـبة أسفل الاسم) */
+.leader-info{
+    grid-column:2/3;
+    text-align:right;
+}
+.leader-info .name{ font-weight:700; }
+.leader-info .strength{ display:block; margin-top:6px; font-size:0.95rem; color:var(--muted); }
+
+/* معلومات الجهة اليسرى (البريد، الجوال، كلمة المرور) — مرتبة عمودياً */
+.leader-stats{
+    grid-column:3/4;
+    text-align:left;
+    display:flex; flex-direction:column; gap:4px;
+    font-size:0.95rem;
+    color:var(--muted);
+}
+.leader-stats .email{ font-weight:600; color:var(--text); }
+.leader-stats .phone, .leader-stats .pass { color:var(--muted); }
+
+/* لمسة وسام صغيرة عند الأول (اختياري، ستايل بسيط) */
+.leader-item.top1 .rank-box{ background:linear-gradient(180deg, rgba(255,210,77,0.22), rgba(255,210,77,0.08)); color:#1a1a1a; }
+ 
+/* ... كل الأكواد السابقة كما هي بدون تعديل ... */
+
+/* لوحة الترتيب — تخطيط مُحسّن */
+.leader-container {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:8px;
+
+    /* ✅ إضافة تمرير للوحة */
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+}
+
+/* ✅ تحسين شكل شريط التمرير */
+.leader-container::-webkit-scrollbar {
+    width: 6px;
+}
+.leader-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+
+/* Sparkles (شرارات) — تعديل لتغطية الشاشة بالكامل */
+.splash-sparkle{
+    position:fixed; /* ✅ بدل absolute حتى تنتشر في الصفحة */
+    width:8px; height:8px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.7) 30%, transparent 50%);
+    pointer-events:none; opacity:0;
+    transform:translate(-50%,-50%) scale(0.6);
+    animation: sparkleAnim 1800ms linear infinite;
+    z-index:9999;
+    mix-blend-mode:screen;
+}
+/* ... باقي الكود بدون أي تغيير ... */
+
+/* استجابة */
+@media (max-width:720px){
+    body{ padding:18px; }
+    .logos img{ height:48px; width:48px; }
+    .input-row input{ width:100%; }
+    .card{ padding:18px; }
+    body::before{ width:110%; height:55%; opacity:0.25; }
+    .leader-item{ grid-template-columns: auto 1fr; } /* stack simpler on small */
+    .leader-stats{ order:2; grid-column:1/3; text-align:left; }
+    .leader-info{ order:1; grid-column:1/3; text-align:right; }
+}
