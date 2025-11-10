@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تحدي الكلمة القوية — أمانة جازان</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- شاشة سبلاش (تظهر 3 ثواني قبل البدء) -->
+  <div id="splash" class="splash-screen">
+    <div class="splash-content">
+      <h2>هـل أنـت قـد التحــدي؟</h2>
+      <p>جــرب واكتــب أقـوى كلمـة سـر 💪</p>
+    </div>
+  </div>
+
+  <!-- شعارات الجهات -->
+  <div class="logos">
+    <img src="images/Jazan-Municipality.png" alt="أمانة منطقة جازان" class="logo logo-left">
+    <img src="images/NCA-Colored-Center.png" alt="الهيئة الوطنية للأمن السيبراني" class="logo logo-right">
+  </div>
+
+  <main class="container">
+    <!-- شاشة تسجيل المشارك -->
+    <section id="userInfo" class="card">
+      <h1>تسجيــل المشــارك</h1>
+      <p class="muted">الرجاء إدخال الاسم الثلاثي، رقم الجوال، والبريد الإلكتروني قبل بدء التحدي</p>
+      <div class="input-row">
+        <input id="userName" type="text" placeholder="الاسم الثلاثي" maxlength="60" />
+      </div>
+      <div class="input-row">
+        <input id="userPhone" type="tel" placeholder="رقم الجوال (05xxxxxxxx)" maxlength="10" />
+      </div>
+      <div class="input-row">
+        <input id="userEmail" type="email" placeholder="البريد الإلكتروني" maxlength="100" />
+      </div>
+      <div class="controls">
+        <button id="startChallenge" class="primary">ابدأ التحدي 🔐</button>
+        <button id="goHomeFromUser" class="tertiary">العودة للرئيسية</button>
+      </div>
+    </section>
+
+    <!-- الصفحة الرئيسية -->
+    <section id="home" class="card active">
+      <h1>مرحبًــا بــك فـي تحــدي الكلمـة القويـة!</h1>
+      <p>اختبـر قـوة كلماتــك وتعلـم كيـف تجعلهــا أقـوى لتحمـي معلوماتــك 🔒</p>
+
+      <div class="buttons">
+        <button id="toTest" class="primary">🔐 اختبــر قـوة كلمتـك الآن!</button>
+        <button id="openLeaderboard" class="secondary">🏆 لـوحة الترتيـب</button>
+      </div>
+    </section>
+
+    <!-- قسم الاختبار -->
+    <section id="test" class="card">
+      <h2>اختبــر قــوة كلمتـك</h2>
+      <p class="muted">أدخل كلمة المرور ثم اضغط تقييم أو احفظ للمسابقة.</p>
+
+      <div class="input-row">
+        <input id="passwordInput" type="password" maxlength="16" aria-label="حقل كلمة المرور">
+        <button id="toggleReveal" title="إظهار/إخفاء">👁️</button>
+      </div>
+
+      <div class="controls">
+        <button id="checkBtn" class="primary">تقييم القوة</button>
+        <button id="submitBtn" class="primary">🔖 حفظ للمسابقة</button>
+        <button id="backHome" class="tertiary">🏠 العودة للرئيسية</button>
+      </div>
+
+      <!-- يظهر بعد الحفظ -->
+      <div id="afterSubmit" class="after-submit" style="display:none;">
+        <button id="toInfo" class="secondary">🔍 ســر الكلمــة القويــة</button>
+      </div>
+
+      <div id="meter" class="meter" aria-hidden="true">
+        <div id="meterBar" class="meter-bar"></div>
+      </div>
+      <p id="result" class="result" aria-live="polite"></p>
+      <p id="pwWarn" class="pw-warn"></p>
+    </section>
+
+    <!-- قسم المعلومات -->
+    <section id="info" class="card">
+      <h2>🔒 نصائــح أساسيــة لحمايــة كلمــات مــرورك</h2>
+      <ul class="tips">
+        <li> اجعل كلمة المرور طويلة — لا تقل عن ٨ أحرف.</li>
+        <li> استخدم مزيجًا من الأحرف الكبيرة والصغيرة والأرقام والرموز.</li>
+        <li> تجنّب استخدام معلوماتك الشخصية مثل الاسم أو تاريخ الميلاد.</li>
+        <li>لا تُعد استخدام نفس الكلمة في أكثر من حساب.</li>
+        <li> غيّر كلمات المرور بشكل دوري لتعزيز الأمان.</li>
+      </ul>
+
+      <div class="controls">
+        <button id="infoBack" class="tertiary">🏠 العـودة للرئيسيـة</button>
+      </div>
+    </section>
+
+    <!-- لوحة الترتيب -->
+    <section id="leaderboard" class="card">
+      <h2>🏆 لوحـة الترتيب — جميـع المشاركين</h2>
+
+      <div class="controls" style="justify-content:space-between; margin-bottom:12px;">
+        <div>
+          <button id="clearEntries" class="secondary">🧹 مسح البيانات (محلي)</button>
+          <button id="lbBack" class="tertiary">🏠 العـودة للرئيسيـة</button>
+        </div>
+      </div>
+
+      <div id="leaderContainer" class="leader-container"></div>
+    </section>
+  </main>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>
